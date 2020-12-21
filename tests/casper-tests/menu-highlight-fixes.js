@@ -37,7 +37,9 @@ casper.then(function() {
 	casper.click('#ws_save_menu');
 });
 
-ameTest.waitForSettingsSavedMessage(function() {
+ameTest.waitForSettingsSavedMessage();
+
+casper.wait(500, function() {
 	casper.test.assertDoesntExist(
 		'#menu-settings .wp-submenu li a[href="options-general.php"]',
 		'The "General" item is no longer in the "Settings" menu'
@@ -66,7 +68,9 @@ ameTest.waitForSettingsSavedMessage(function() {
 	casper.test.comment('Go to "Appearance -> General"');
 });
 
-casper.thenOpen(ameTestConfig.adminUrl + '/options-general.php', function() {
+casper.thenOpen(ameTestConfig.adminUrl + '/options-general.php');
+
+casper.wait(500, function() {
 	casper.test.assertExists(
 		'#menu-appearance.wp-has-current-submenu.wp-menu-open',
 		'"Appearance" is highlighted as the current menu'
@@ -85,7 +89,9 @@ casper.thenOpen(ameTestConfig.adminUrl + '/options-general.php', function() {
 	);
 });
 
-casper.thenOpen(ameTestConfig.adminUrl + '/plugins.php?plugin_status=active', function() {
+casper.thenOpen(ameTestConfig.adminUrl + '/plugins.php?plugin_status=active');
+
+casper.wait(500, function() {
 	casper.test.comment(
 		"Regression test: Verify that an item with a custom URL is highlighted even when it's the first item."
 	);

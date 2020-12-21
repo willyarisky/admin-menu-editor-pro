@@ -185,7 +185,7 @@ var AmeDashboardWidgetEditor = /** @class */ (function () {
         //This means we must apply bindings directly to the dialog node.
         ko.applyBindings(this, this.importDialog.get(0));
         //Enable the upload button only when the user selects a file.
-        importForm.find('#ame-import-file-selector').change(function (event) {
+        importForm.find('#ame-import-file-selector').on('change', function (event) {
             _this.uploadButtonEnabled(!!jQuery(event.target).val());
         });
         //This function displays unhandled server side errors. In theory, our upload handler always returns a well-formed

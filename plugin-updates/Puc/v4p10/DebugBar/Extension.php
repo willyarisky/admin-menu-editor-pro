@@ -14,6 +14,10 @@ if ( !class_exists('Puc_v4p10_DebugBar_Extension', false) ):
 				$this->panelClass = $panelClass;
 			}
 
+			if ( version_compare(PHP_VERSION, '5.3', '>=') && (strpos($this->panelClass, '\\') === false) ) {
+				$this->panelClass = __NAMESPACE__ . '\\' . $this->panelClass;
+			}
+
 			add_filter('debug_bar_panels', array($this, 'addDebugBarPanel'));
 			add_action('debug_bar_enqueue_scripts', array($this, 'enqueuePanelDependencies'));
 
@@ -48,7 +52,7 @@ if ( !class_exists('Puc_v4p10_DebugBar_Extension', false) ):
 				'puc-debug-bar-js-v4',
 				$this->getLibraryUrl("/js/debug-bar.js"),
 				array('jquery'),
-				'20170516'
+				'20201209'
 			);
 		}
 

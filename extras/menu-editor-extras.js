@@ -35,7 +35,7 @@ jQuery(function ($) {
 	});
 
 	//The "Reset permissions" toolbar button.
-	$('#ws_reset_actor_permissions').click(function (event) {
+	$('#ws_reset_actor_permissions').on('click', function (event) {
 		event.preventDefault();
 
 		var selectedActor = AmeEditorApi.actorSelectorWidget.selectedActor;

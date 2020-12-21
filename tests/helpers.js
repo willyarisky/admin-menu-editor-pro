@@ -7,7 +7,8 @@ var ameTest = {
 				return;
 			}
 
-			casper.thenOpen(ameTestConfig.siteUrl + '/wp-login.php', function() {
+			casper.thenOpen(ameTestConfig.siteUrl + '/wp-login.php');
+			casper.wait(500, function() {
 				casper.fill('form[name="loginform"]', {
 					'log': username,
 					'pwd': password
@@ -21,21 +22,27 @@ var ameTest = {
 	
 	isLoggedIn: function(userName) {
 		var currentDisplayName = casper.evaluate(function() {
+			if (typeof jQuery === 'undefined') {
+				return '';
+			}
 			return jQuery('#wpadminbar').find('.display-name').text().trim();
 		});
 		var currentUserName = casper.evaluate(function() {
+			if (typeof jQuery === 'undefined') {
+				return '';
+			}
 			return jQuery('#wpadminbar').find('.username').text().trim();
 		});
 
-		if ( currentDisplayName == '' ) {
+		if ( currentDisplayName === '' ) {
 			return false;
 		}
 
 		if (userName) {
 			if (currentUserName !== '') {
-				return (currentUserName == userName);
+				return (currentUserName === userName);
 			} else {
-				return (currentDisplayName == userName);
+				return (currentDisplayName === userName);
 			}
 		}
 
@@ -250,7 +257,7 @@ var ameTest = {
 		// Caution: If the first argument to casper.evaluate() is an object Casper will treat it
 		// as a list of arguments to pass to the callback. So we must pass "properties" as the second arg.
 		casper.evaluate(function(level, properties) {
-			var itemSelector = '';
+			var itemSelector;
 			if ( level === 'menu' ) {
 				itemSelector = '.ws_menu.ws_active';
 			} else {

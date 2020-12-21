@@ -41,7 +41,7 @@ casper.thenOpen(ameTestConfig.adminUrl + '/options-general.php?page=menu_editor&
 casper.waitUntilVisible('#ame-mb-screen-list', function () {
 	//No changes for now.
 	casper.click('.ame-mb-save-form #submit');
-});
+}, null, 25000);
 ameTest.waitForSettingsSavedMessage();
 
 //Dashboard widgets

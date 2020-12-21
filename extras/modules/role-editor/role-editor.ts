@@ -3447,10 +3447,10 @@ class RexRoleEditor implements AmeActorManagerInterface {
 	/**
 	 * Get or create a capability instance.
 	 */
-	getCapability(capabilityName: string): RexCapability {
+	getCapability(capabilityName: string, recursionDepth: number = 0): RexCapability {
 		//Un-map meta capabilities where possible.
-		if (this.metaCapabilityMap.hasOwnProperty(capabilityName)) {
-			return this.getCapability(this.metaCapabilityMap[capabilityName]);
+		if (this.metaCapabilityMap.hasOwnProperty(capabilityName) && (recursionDepth < 10)) {
+			return this.getCapability(this.metaCapabilityMap[capabilityName], recursionDepth + 1);
 		}
 
 		if (!this.capabilities.hasOwnProperty(capabilityName)) {

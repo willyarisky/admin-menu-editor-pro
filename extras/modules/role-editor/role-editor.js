@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -2721,10 +2721,11 @@ var RexRoleEditor = /** @class */ (function () {
     /**
      * Get or create a capability instance.
      */
-    RexRoleEditor.prototype.getCapability = function (capabilityName) {
+    RexRoleEditor.prototype.getCapability = function (capabilityName, recursionDepth) {
+        if (recursionDepth === void 0) { recursionDepth = 0; }
         //Un-map meta capabilities where possible.
-        if (this.metaCapabilityMap.hasOwnProperty(capabilityName)) {
-            return this.getCapability(this.metaCapabilityMap[capabilityName]);
+        if (this.metaCapabilityMap.hasOwnProperty(capabilityName) && (recursionDepth < 10)) {
+            return this.getCapability(this.metaCapabilityMap[capabilityName], recursionDepth + 1);
         }
         if (!this.capabilities.hasOwnProperty(capabilityName)) {
             var _1 = wsAmeLodash;

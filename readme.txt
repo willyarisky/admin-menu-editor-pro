@@ -2,8 +2,8 @@
 Contributors: whiteshadow
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 5.5
-Stable tag: 2.12.4
+Tested up to: 5.6
+Stable tag: 2.13
 
 Lets you directly edit the WordPress admin menu. You can re-order, hide or rename existing menus, add custom menus and more.
 
@@ -82,6 +82,23 @@ Here are some usage tips and other things that can be good to know when using th
 == Changelog ==
 
 [Get the latest version here.](http://adminmenueditor.com/updates/)
+
+= 2.13 (2020-12-15) = 
+##### Added
+* Added a "bbPress override" option that prevents bbPress from resetting all changes that are made to dynamic bbPress roles. Enabling this option allows you to edit bbPress roles with this or any other role editing plugin.
+
+##### Fixed
+* Fixed a bug where registering a custom post type in a mu-plugin could cause Admin Menu Editor Pro to trigger either a fatal error or a warning and multiple notices.
+* Fixed the role editor going into infinite recursion if there was a meta capability that mapped to itself. 
+* Fixed a conflict that caused some hidden Simple Calendars menu items to show up when Admin Menu Editor was activated.
+* Fixed a bug where menu items that had special characters like "&" and "/" in the slug could stop working if they were moved to a different submenu or to the top level.
+* Fixed a bug where changing the menu icon to an external image (like a URL pointing to a PNG file) could result in the old and the new icon being displayed at once, either side by side or one below the other. This only affected menu items that had an icon set in CSS by using  a `::before` pseudo-element. 
+* Fixed many jQuery deprecation warnings.
+* Fixed a bug where some menu settings would not loaded from the database when another plugin triggered a filter that caused the menu configuration to be loaded before AME loaded its modules.
+* Fixed bug that could cause an obscure conflict with plugins that change the admin URL, like "WP Hide & Security Enhancer". When a user tried to open "Dashboard -> Home", the plugin could incorrectly apply the permisssions of a another menu item to the "Home" item. If the other menu item was configured to be inaccessible, the user would get an error message when logging in (they were still successfully logged in).
+
+##### Changed
+* Improved error reporting in situations where the plugin can't parse menu data.
 
 = 2.12.4 (2020-10-02) =
 * Hotfix: Fixed a new plugin conflict introduced in version 2.12.3 that could prevent some add-on features like the "Branding" tab from being loaded on some sites.

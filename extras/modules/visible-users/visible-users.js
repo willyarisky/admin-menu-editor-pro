@@ -268,7 +268,7 @@ window.AmeSelectUsersDialog = (function($, _) {
 		}, 200, {maxWait: 1000}));
 
 		//Search box keyboard shortcuts.
-		$searchBox.keydown(function(event) {
+		$searchBox.on('keydown', function(event) {
 			var currentRow = $availableUsersTable.find('tr.ws_user_best_match').first(),
 				nextRow = currentRow;
 			if (currentRow.length === 0) {

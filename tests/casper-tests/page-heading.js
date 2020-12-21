@@ -33,7 +33,10 @@ casper.then(function() {
 //Wait for the "settings saved" message.
 ameTest.waitForSettingsSavedMessage();
 
-casper.thenOpen(ameTestConfig.adminUrl + '/plugins.php', function() {
+casper.thenOpen(ameTestConfig.adminUrl + '/plugins.php');
+
+//Wait a little bit for the heading replacement script to run.
+casper.wait(500, function() {
 	casper.test.assertSelectorHasText(
 		'.wrap > h1:first-child', //In WP 4.2 and below it was H2. WP 4.3 changed it to H1.
 		'My Custom Heading',
@@ -48,7 +51,9 @@ casper.thenOpen(ameTestConfig.adminUrl + '/plugins.php', function() {
 	);
 });
 
-casper.thenOpen(ameTestConfig.adminUrl + '/widgets.php', function() {
+casper.thenOpen(ameTestConfig.adminUrl + '/widgets.php');
+
+casper.wait(500, function() {
 	casper.test.assertSelectorHasText(
 		'.wrap > h1:first-child',
 		'Another Heading',

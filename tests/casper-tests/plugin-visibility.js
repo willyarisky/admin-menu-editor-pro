@@ -1,6 +1,8 @@
 /*
  Test the Plugin Visibility module.
  */
+casper.options.timeout = 120000;
+
 casper.start();
 
 ameTest.thenQuickSetup(['config-manipulator']);
@@ -252,9 +254,13 @@ casper.thenOpen(pluginsPageUrl, function() {
 //force a logout, so we need to log in as a different user first.
 ameTest.thenLoginAsAdmin();
 //Delete test users.
-casper.thenOpen(ameTestConfig.adminUrl + '/?ame_delete_users=new_user,plugman,doubleman,editor_and_admin');
+casper.thenOpen(ameTestConfig.adminUrl + '/?ame_delete_users=new_user,plugman,doubleman,editor_and_admin', function () {
+	casper.test.comment("Test users deleted.");
+});
 //Delete test role.
-casper.thenOpen(ameTestConfig.adminUrl + '/?ame_delete_roles=plugin_manager');
+casper.thenOpen(ameTestConfig.adminUrl + '/?ame_delete_roles=plugin_manager', function () {
+	casper.test.comment("Test role deleted.");
+});
 
 //Rename one of the custom plugins.
 ameTest.resetPluginConfiguration();

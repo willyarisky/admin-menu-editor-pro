@@ -4,7 +4,7 @@
  * Useful for testing the editor's ability to move/copy/add plugin menus.
  */
 
-add_action('admin_menu', function() {
+add_action('admin_menu', function () {
 	add_options_page(
 		'Dummy Settings',
 		'Dummy Settings',
@@ -90,7 +90,7 @@ add_action('admin_menu', function() {
 		'NH Submenu #1',
 		'read',
 		'dummy-nh-submenu-1',
-		function() {
+		function () {
 			amt_output_page('nh-submenu-1-content');
 		}
 	);
@@ -152,6 +152,62 @@ add_action('admin_menu', function() {
 		'dashicons-editor-code',
 		70
 	);
+
+	//A regular menu and a menu that links to an #anchor on that page. The "#" character
+	//should be preserved as-is instead of being URL-encoded.
+	add_menu_page(
+		'Regular Menu',
+		'Regular Menu',
+		'read',
+		'regular-dummy-menu',
+		'amt_output_page',
+		'dashicons-editor-code',
+		75
+	);
+	add_submenu_page(
+		'tools.php',
+		'With #Anchor',
+		'With #Anchor',
+		'read',
+		'admin.php?page=regular-dummy-menu#tab=value',
+		''
+	);
+
+	//Two menus with the same position. WordPress core automatically assigns 
+	//a new non-numeric key to the second menu.
+	$position = 61;
+	add_menu_page(
+		'Position Conflict A',
+		'Position Conflict A',
+		'read',
+		'position-conflict-a',
+		'amt_output_page',
+		'dashicons-database-export',
+		$position
+	);
+	add_menu_page(
+		'Position Conflict B',
+		'Position Conflict B',
+		'read',
+		'position-conflict-b',
+		'amt_output_page',
+		'dashicons-database-import',
+		$position
+	);
+
+	//Add some submenu items to the two menus.
+	for ($i = 1; $i <= 3; $i++) {
+		foreach (['a', 'b'] as $parentSuffix) {
+			add_submenu_page(
+				'position-conflict-' . $parentSuffix,
+				'Example #' . $i,
+				'Example #' . $i,
+				'read',
+				'pc-submenu-' . $parentSuffix . '-' . $i,
+				'amt_output_page'
+			);
+		}
+	}
 });
 
 function amt_output_page($content_id = 'ame-test-page-content') {
